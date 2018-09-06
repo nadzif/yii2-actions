@@ -1,0 +1,35 @@
+{
+  "name": "nadzif/yii2-ajax-actions",
+  "description": "Yii2 ajax action classes",
+  "license": "MIT License",
+  "authors": [
+    {
+      "name": "Nadzif",
+      "email": "nadzif.lambda@gmail.com",
+      "role": "Core Developer"
+    },
+    {
+      "name": "Harto Tri Mulyo",
+      "email": "harto.trimulto@gmail.com",
+      "role": "Core Developer"
+    }
+  ],
+  "keywords": [
+    "yii2",
+    "action",
+    "ajax",
+    "javascript"
+  ],
+  "type": "yii2-extension",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=5.6.0",
+    "yiisoft/yii2": ">=2.0",
+  },
+  "autoload": {
+    "psr-4": {
+      "nadzif\\ajaxactions\\": "src/"
+    }
+  }
+}
