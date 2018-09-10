@@ -6,7 +6,7 @@
  * Time: 8:20 AM
  */
 
-namespace backend\widgets;
+namespace nadzif\actions\widgets;
 
 class Modal extends \yii\bootstrap4\Modal
 {

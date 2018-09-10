@@ -1,9 +1,9 @@
 <?php
 
 
-use backend\widgets\Modal;
 use demogorgorn\ajax\AjaxSubmitButton;
 use nadzif\actions\BaseForm;
+use nadzif\actions\widgets\Modal;
 use rmrevin\yii\fontawesome\FAS;
 use rmrevin\yii\fontawesome\FontAwesome;
 use yii\helpers\ArrayHelper;
