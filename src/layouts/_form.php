@@ -9,6 +9,7 @@ use rmrevin\yii\fontawesome\FontAwesome;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 
 /**
