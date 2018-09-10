@@ -108,8 +108,8 @@ if ($submitAsAjax) {
         console.log(typeof html);
         $('#output').html(html);
         
-        if($("#$gridViewId-pjax").length){
-            $.pjax.reload({container:"#$gridViewId-pjax"});
+        if($("#$gridId-pjax").length){
+            $.pjax.reload({container:"#$gridId-pjax"});
         }
         
         if(html.data !== undefined && html.data.alert != undefined){
