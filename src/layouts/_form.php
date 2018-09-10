@@ -34,10 +34,12 @@ if ($formAsModal) {
     ]);
 
 } else {
-    $activeFormConfig['action'] = $actionUrl;
+    if(isset($activeFormConfig['action'])){
+        $activeFormConfig['action'] = $actionUrl;
+    }
 }
 
-$form      = ActiveForm::begin(ArrayHelper::merge($activeFormConfig));
+$form      = ActiveForm::begin($activeFormConfig);
 $formRules = $model->formRules();
 
 foreach ($formRules as $attributeName => $attributeOptions) {
