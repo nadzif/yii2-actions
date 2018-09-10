@@ -29,9 +29,11 @@ $activeFormConfig = [];
 
 if ($formAsModal) {
     $modal = Modal::begin([
-        'title' => Html::tag('h6', ArrayHelper::getValue($modalOptions, 'title', Yii::t('app', 'Form')),
+        'title'   => Html::tag('h6', ArrayHelper::getValue($modalOptions, 'title', Yii::t('app', 'Form')),
             ['class' => 'tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold']
-        )
+        ),
+        'options' => ['class' => $scenario . '-form-action']
+
     ]);
 
 } else {
