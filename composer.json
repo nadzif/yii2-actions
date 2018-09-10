@@ -1,6 +1,6 @@
 {
-  "name": "nadzif/yii2-ajax-actions",
-  "description": "Yii2 ajax action classes",
+  "name": "nadzif/yii2-actions",
+  "description": "Yii2 action classes",
   "license": "MIT License",
   "authors": [
     {
@@ -37,10 +37,6 @@
     }
   },
   "repositories": [
-    {
-      "type": "composer",
-      "url": "https://asset-packagist.org"
-    },
     {
       "type": "vcs",
       "url": "https://github.com/nadzif/yii2-growl-js"
