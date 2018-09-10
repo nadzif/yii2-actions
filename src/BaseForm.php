@@ -18,15 +18,20 @@ class BaseForm extends Model
     const SCENARIO_CREATE = 'create';
     const SCENARIO_UPDATE = 'update';
 
+    const INPUT_TYPE_TEXT     = 'text';
+    const INPUT_TYPE_TEXTAREA = 'textarea';
+    const INPUT_TYPE_PASSWORD = 'password';
+
     /** @var ActiveRecord */
     public $model;
 
     public $validateForm = true;
+
     public function formRules()
     {
         $defaultRules = [];
         foreach ($this->attributes as $attributeKey => $defaultRule) {
-            $defaultRules[$attributeKey] = ['inputType' => 'text'];
+            $defaultRules[$attributeKey] = ['inputType' => self::INPUT_TYPE_TEXT];
         }
 
         return $defaultRules;

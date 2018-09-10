@@ -35,7 +35,7 @@ if ($formAsModal) {
     ]);
 
 } else {
-    if(isset($activeFormConfig['action'])){
+    if (isset($activeFormConfig['action'])) {
         $activeFormConfig['action'] = $actionUrl;
     }
 }
@@ -55,15 +55,15 @@ foreach ($formRules as $attributeName => $attributeOptions) {
     $formField = $form->field($model, $attributeName);
 
     switch ($attributeOptions['inputType']) {
-        case 'text':
+        case BaseForm::INPUT_TYPE_TEXT:
 //            $inputOptions['id'] = $inputId;
             $formField->textInput($inputOptions);
             break;
-        case 'textarea':
+        case BaseForm::INPUT_TYPE_TEXTAREA:
 //            $inputOptions['id'] = $inputId;
             $formField->textarea($inputOptions);
             break;
-        case 'password':
+        case BaseForm::INPUT_TYPE_PASSWORD:
 //            $inputOptions['id'] = $inputId;
             $formField->passwordInput($inputOptions);
             break;
