@@ -17,7 +17,7 @@ class Modal extends \yii\bootstrap4\Modal
     public $options       = ['tabindex' => false];
     public $headerOptions = ['class' => 'pd-y-20 pd-x-25'];
     public $toggleButton  = [
-        'label' => '<i class="ion-plus"></i>',
+        'label' => '<i class="fas fa-plus"></i>',
         'class' => 'btn btn-success'
     ];
 
