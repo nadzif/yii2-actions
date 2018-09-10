@@ -44,6 +44,7 @@ class CreateAction extends Action
 
     public function run()
     {
+        /** @var BaseForm $formModel */
         $formModel        = new $this->formClass;
         $formModel->model = $this->model;
 

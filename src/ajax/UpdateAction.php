@@ -11,6 +11,7 @@ namespace nadzif\actions\ajax;
 
 use nadzif\actions\BaseForm;
 use yii\base\Action;
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -58,8 +59,11 @@ class UpdateAction extends Action
         $formModel           = $this->formModel;
         $formModel->scenario = $this->scenario;
 
-        $model            = new $this->activeRecordClass;
-        $formModel->model = $model::findOne($requestParam);
+        /** @var ActiveRecord $activeRecordClass */
+        $activeRecordClass = new $this->activeRecordClass;
+
+        /** @var ActiveRecord $activeRecordClass */
+        $formModel->model = $activeRecordClass::findOne($requestParam);
 
         $formModel->loadAttributes();
 

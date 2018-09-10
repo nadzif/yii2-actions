@@ -1,15 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Nadzif Glovory
- * Date: 6/25/2018
- * Time: 1:20 PM
- */
 
 namespace nadzif\actions\ajax;
 
-
 use yii\base\Action;
+use yii\db\ActiveRecord;
 use yii\helpers\Json;
 
 class DeleteAction extends Action
@@ -40,13 +34,22 @@ class DeleteAction extends Action
         parent::init();
     }
 
+    /**
+     * @return string
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
     public function run()
     {
-        $requestParam = \Yii::$app->request->get($this->key);
-        $model        = new $this->activeRecordClass;
-        $data         = $model::findOne($requestParam);
+        $requestParam      = \Yii::$app->request->get($this->key);
 
-        if ($this->condition && $data->delete()) {
+        /** @var ActiveRecord $activeRecordClass */
+        $activeRecordClass = new $this->activeRecordClass;
+
+        /** @var ActiveRecord $model */
+        $model = $activeRecordClass::findOne($requestParam);
+
+        if ($this->condition && $model->delete()) {
             return Json::encode([
                 'data' => [
                     'alert' => $this->successAlert,
