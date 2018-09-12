@@ -181,4 +181,7 @@ ActiveForm::end();
 
 if ($formAsModal) {
     Modal::end();
+    if ($scenario === $model::SCENARIO_UPDATE) {
+        $this->registerJs(new JsExpression('$("#'.$modalId.'").prev("button").hide()'));
+    }
 }
