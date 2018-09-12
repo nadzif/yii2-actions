@@ -13,12 +13,13 @@ use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 
 /**
- * @var BaseForm     $model
- * @var string       $scenario
- * @var bool         $asModal
- * @var bool         $submitAjax
- * @var array|string $actionUrl
- * @var array        $modalOptions
+ * @var \yii\web\View $this
+ * @var BaseForm      $model
+ * @var string        $scenario
+ * @var bool          $asModal
+ * @var bool          $submitAjax
+ * @var array|string  $actionUrl
+ * @var array         $modalOptions
  */
 
 
@@ -58,7 +59,7 @@ foreach ($formRules as $attributeName => $attributeOptions) {
     $inputType    = ArrayHelper::getValue($attributeOptions, 'inputType', 'text');
     $inputOptions = ArrayHelper::getValue($attributeOptions, 'inputOptions', []);
 
-//    $inputId   = $model->scenario . '-' . Html::getInputId($model, $attributeName);
+    $inputId   = $model->scenario . '-' . Html::getInputId($model, $attributeName);
     $formField = $form->field($model, $attributeName);
 
     switch ($attributeOptions['inputType']) {
@@ -71,7 +72,7 @@ foreach ($formRules as $attributeName => $attributeOptions) {
             $formField->textarea($inputOptions);
             break;
         case BaseForm::INPUT_TYPE_PASSWORD:
-//            $inputOptions['id'] = $inputId;
+            $inputOptions['id'] = $inputId;
             $formField->passwordInput($inputOptions);
             break;
         default:
@@ -80,8 +81,8 @@ foreach ($formRules as $attributeName => $attributeOptions) {
                     $inputOptions['initValueText'] = $model->$attributeName;
                 }
             }
-//            $inputOptions['id']            = $inputId;
-//            $inputOptions['options']['id'] = $inputId;
+            $inputOptions['id']            = $inputId;
+            $inputOptions['options']['id'] = $inputId;
             $formField->widget($inputType, $inputOptions);
             break;
     }
@@ -168,13 +169,13 @@ JS;
         'label'             => $submitLabel,
         'useWithActiveForm' => $formId,
         'ajaxOptions'       => $ajaxOptions,
-        'options'           => ['class' => 'btn btn-info', 'type' => 'submit'],
+        'options'           => ['class' => 'btn btn-info pull-right', 'type' => 'submit'],
     ]);
 } else {
     echo Html::submitButton($submitLabel);
 }
 
-echo Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-secondary pull-right']);
+echo Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-secondary pull-right mr-2']);
 
 ActiveForm::end();
 
