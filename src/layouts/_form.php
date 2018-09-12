@@ -32,7 +32,12 @@ if ($formAsModal) {
         'title'   => Html::tag('h6', ArrayHelper::getValue($modalOptions, 'title', Yii::t('app', 'Form')),
             ['class' => 'tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold']
         ),
-        'options' => ['class' => $scenario . '-form-action']
+        'options' => [
+            'class' => $scenario . '-form-action',
+            'data'  => [
+                'model' => (new \ReflectionClass($model))->getShortName()
+            ]
+        ]
 
     ]);
 
@@ -150,14 +155,19 @@ if ($submitAsAjax) {
     })
 JS;
 
+    $ajaxOptions = [
+        'type'    => 'POST',
+        'success' => new JsExpression($submitSuccess)
+    ];
+
+    if ($scenario === $model::SCENARIO_CREATE) {
+        $ajaxOptions['url'] = Url::to($actionUrl);
+    }
+
     echo AjaxSubmitButton::widget([
         'label'             => $submitLabel,
         'useWithActiveForm' => $formId,
-        'ajaxOptions'       => [
-            'type'    => 'POST',
-            'url'     => Url::to($actionUrl),
-            'success' => new JsExpression($submitSuccess),
-        ],
+        'ajaxOptions'       => $ajaxOptions,
         'options'           => ['class' => 'btn btn-info', 'type' => 'submit'],
     ]);
 } else {
