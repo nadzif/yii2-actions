@@ -28,9 +28,10 @@ class DetailAction extends \yii\base\Action
             $keyIdentifier = \Yii::$app->request->get($this->index);
         }
 
-        /** @var ActiveRecord $model */
-        $model = new $this->modelClass;
-        $model = $model->findOne([$this->key => $keyIdentifier]);
+        /** @var ActiveRecord $activeRecord */
+        $activeRecord = new $this->modelClass;
+        $model        = $activeRecord->findOne([$this->key => $keyIdentifier]);
+
         return DetailView::widget([
             'id'         => $model->tableSchema->name . '-' . $model->id,
             'options'    => ['class' => 'table detail-view'],

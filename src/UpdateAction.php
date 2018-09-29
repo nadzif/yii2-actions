@@ -18,8 +18,9 @@ class UpdateAction extends \yii\base\Action
     public $scenario = BaseForm::SCENARIO_UPDATE;
 
     public $activeRecordClass;
-    public $key = 'id';
-    public $condition;
+    public $key       = 'id';
+    public $condition = true;
+    public $recordCondition;
 
     public $flashKeySuccess = 'success';
     public $flashKeyError   = 'danger';
@@ -51,8 +52,8 @@ class UpdateAction extends \yii\base\Action
         $activeRecord = new $this->activeRecordClass;
         $model        = $activeRecord::find()->where([$this->key => $id]);
 
-        if ($this->condition) {
-            $model->andWhere($this->condition);
+        if ($this->recordCondition) {
+            $model->andWhere($this->recordCondition);
         }
 
         $model = $model->one();
@@ -62,7 +63,7 @@ class UpdateAction extends \yii\base\Action
         $form->loadAttributes();
 
         if (\Yii::$app->request->isPost && $form->load(\Yii::$app->request->post())) {
-            if ($form->save()) {
+            if ($this->condition && $form->save()) {
                 \Yii::$app->session->setFlash('success', $this->successMessage);
                 return $this->controller->redirect($this->redirectUrl);
             } else {

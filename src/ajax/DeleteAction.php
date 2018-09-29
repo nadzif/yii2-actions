@@ -10,18 +10,26 @@ class DeleteAction extends Action
 {
     public $activeRecordClass;
     public $condition = true;
+    public $recordCondition;
 
     public $key = 'id';
 
-    public $successAlert;
+    public $isSoftDelete        = false;
+    public $softDeleteAttribute = 'status';
+    public $softDeleteValue     = 'deleted';
+
+    public $successMessage;
     public $errorMessage;
+
+    public $flashKeySuccess = 'success';
+    public $flashKeyError   = 'danger';
 
     public function init()
     {
 
-        if (!isset($this->successAlert)) {
-            $this->successAlert[] = [
-                'type'    => 'success',
+        if (!isset($this->successMessage)) {
+            $this->successMessage[] = [
+                'type'    => $this->flashKeySuccess,
                 'title'   => \Yii::t('app', 'Delete Success'),
                 'message' => \Yii::t('app', 'Record has been removed.'),
             ];
@@ -39,32 +47,50 @@ class DeleteAction extends Action
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function run()
+    public function run($id)
     {
-        $requestParam      = \Yii::$app->request->get($this->key);
 
-        /** @var ActiveRecord $activeRecordClass */
-        $activeRecordClass = new $this->activeRecordClass;
+        /** @var ActiveRecord $activeRecord */
+        $activeRecord = new $this->activeRecordClass;
 
-        /** @var ActiveRecord $model */
-        $model = $activeRecordClass::findOne($requestParam);
+        $model = $activeRecord::find()->where([$this->key => $id]);
+        if ($this->recordCondition) {
+            $model->andWhere($this->recordCondition);
+        }
 
-        if ($this->condition && $model->delete()) {
+        $model = $model->one();
+
+        $success = false;
+
+        if ($this->condition) {
+            if ($this->isSoftDelete) {
+                $attr = $this->softDeleteAttribute;
+
+                $model->{$attr} = $this->softDeleteValue;
+                $success        = $model->save();
+            } else {
+                $success = $model->delete();
+            }
+        }
+
+
+        if ($success) {
             return Json::encode([
                 'data' => [
-                    'alert' => $this->successAlert,
+                    'alert' => $this->successMessage,
                 ]
             ]);
         } else {
             return Json::encode([
                 'data' => [
                     'alert' => [
-                        'type'    => 'danger',
+                        'type'    => $this->flashKeyError,
                         'title'   => \Yii::t('app', 'Delete Failed'),
                         'message' => $this->errorMessage
                     ]
                 ]
             ]);
         }
+
     }
 }
