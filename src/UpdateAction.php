@@ -2,33 +2,32 @@
 
 namespace nadzif\actions;
 
-use backend\base\ActiveRecord;
-use backend\base\FormModel;
+use nadzif\actions\base\BaseForm;
+use yii\db\ActiveRecord;
 
-/**
- * Class UpdateAction
- *
- * @package backend\actions
- * @property string    $hashId,
- * @property FormModel $formModel
- */
 class UpdateAction extends \yii\base\Action
 {
 
     public $title;
-    public $subtitle;
     public $breadcrumbs;
     public $recordIdentifier = 'name';
 
-    public $formModel;
-    public $scenario = FormModel::SCENARIO_UPDATE;
-    public $activeRecordClass;
+    public $view = '@backend/actions/layouts/_form';
 
-    public $redirectUrl;
+    public $form;
+    public $scenario = BaseForm::SCENARIO_UPDATE;
+
+    public $activeRecordClass;
+    public $key = 'id';
+    public $condition;
+
+    public $flashKeySuccess = 'success';
+    public $flashKeyError   = 'danger';
+
     public $successMessage;
     public $errorMessage;
 
-    public $form = '@backend/actions/layouts/_form';
+    public $redirectUrl;
 
 
     public function init()
@@ -44,19 +43,26 @@ class UpdateAction extends \yii\base\Action
         parent::init();
     }
 
-    public function run()
+    public function run($id)
     {
-        $formModel = $this->formModel;
-        /** @var \yii\db\ActiveRecord $model */
-        $model = new $this->activeRecordClass;
+        /** @var BaseForm $form */
+        $form = $this->form;
+        /** @var ActiveRecord $model */
+        $activeRecord = new $this->activeRecordClass;
+        $model        = $activeRecord::find()->where([$this->key => $id]);
 
-        $formModel->model = $model::findOne(\Yii::$app->request->get('hashId'));
+        if ($this->condition) {
+            $model->andWhere($this->condition);
+        }
 
-        $formModel->setScenario($this->scenario);
-        $formModel->loadAttributes();
+        $model = $model->one();
 
-        if (\Yii::$app->request->isPost && $formModel->load(\Yii::$app->request->post())) {
-            if ($formModel->save()) {
+        $form->model = $model;
+        $form->setScenario($this->scenario);
+        $form->loadAttributes();
+
+        if (\Yii::$app->request->isPost && $form->load(\Yii::$app->request->post())) {
+            if ($form->save()) {
                 \Yii::$app->session->setFlash('success', $this->successMessage);
                 return $this->controller->redirect($this->redirectUrl);
             } else {
@@ -67,10 +73,8 @@ class UpdateAction extends \yii\base\Action
         $view                          = $this->controller->getView();
         $view->title                   = $this->title;
         $view->params['breadcrumbs']   = $this->breadcrumbs;
-        $view->params['breadcrumbs'][] = $formModel->model->getAttribute($this->recordIdentifier);
+        $view->params['breadcrumbs'][] = $form->model->getAttribute($this->recordIdentifier);
 
-        return $this->controller->render($this->form, [
-            'model' => $formModel,
-        ]);
+        return $this->controller->render($this->view, ['model' => $form]);
     }
 }
