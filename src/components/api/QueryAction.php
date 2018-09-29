@@ -1,6 +1,6 @@
 <?php
 
-namespace api\components;
+namespace nadzif\actions\components\api;
 
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
@@ -20,7 +20,7 @@ class QueryAction extends \yii\base\Action
 
     /** @var int */
     public $apiCodeSuccess = 0;
-    public $apiCodeFailed = 0;
+    public $apiCodeFailed  = 0;
 
     public $successMessage;
 

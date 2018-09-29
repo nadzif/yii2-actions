@@ -1,9 +1,9 @@
 <?php
 
-namespace api\actions;
+namespace nadzif\actions\api;
 
-use api\components\Response;
-use api\components\SingleRecordAction;
+use nadzif\actions\components\api\Response;
+use nadzif\actions\components\api\SingleRecordAction;
 use yii\web\NotFoundHttpException;
 
 class DeleteAction extends SingleRecordAction

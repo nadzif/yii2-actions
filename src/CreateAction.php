@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Nadzif Glovory
- * Date: 5/18/2018
- * Time: 3:23 AM
- */
+namespace nadzif\actions;
 
 class CreateAction extends \yii\base\Action
 {

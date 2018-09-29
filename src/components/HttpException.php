@@ -1,6 +1,6 @@
 <?php
 
-namespace api\components;
+namespace nadzif\actions\api\components;
 
 /**
  * Class HttpException

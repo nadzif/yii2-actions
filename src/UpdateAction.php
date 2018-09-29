@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\actions;
+namespace nadzif\actions;
 
 use backend\base\ActiveRecord;
 use backend\base\FormModel;
@@ -47,7 +47,7 @@ class UpdateAction extends \yii\base\Action
     public function run()
     {
         $formModel = $this->formModel;
-        /** @var ActiveRecord $model */
+        /** @var \yii\db\ActiveRecord $model */
         $model = new $this->activeRecordClass;
 
         $formModel->model = $model::findOne(\Yii::$app->request->get('hashId'));

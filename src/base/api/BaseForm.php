@@ -1,6 +1,6 @@
 <?php
 
-namespace api\components;
+namespace nadzif\actions\base\api;
 
 use yii\base\Model;
 
@@ -28,7 +28,8 @@ abstract class BaseForm extends Model
      *
      * Format meta for this form
      */
-    public function meta() {
+    public function meta()
+    {
         return [];
     }
 }

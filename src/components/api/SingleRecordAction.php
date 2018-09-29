@@ -1,8 +1,9 @@
 <?php
 
-namespace api\components;
+namespace nadzif\actions\components\api;
 
 use yii\base\InvalidArgumentException;
+use yii\db\ActiveRecord;
 use yii\web\NotFoundHttpException;
 
 class SingleRecordAction extends QueryAction
@@ -19,8 +20,9 @@ class SingleRecordAction extends QueryAction
     protected function findRecord($id)
     {
         try {
+            /** @var ActiveRecord $modelClass */
             $modelClass = new $this->query->modelClass;
-            $record = $this->query->andWhere([$modelClass::tableName() . '.id' => $id])->one();
+            $record     = $this->query->andWhere([$modelClass::tableName() . '.id' => $id])->one();
 
             if (empty($record)) {
                 throw new InvalidArgumentException();

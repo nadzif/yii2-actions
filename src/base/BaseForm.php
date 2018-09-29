@@ -6,7 +6,7 @@
  * Time: 1:59 AM
  */
 
-namespace nadzif\actions;
+namespace nadzif\actions\base;
 
 
 use yii\base\Model;

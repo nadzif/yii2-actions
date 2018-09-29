@@ -1,10 +1,10 @@
 <?php
 
-namespace api\actions;
+namespace nadzif\actions\api;
 
 use api\components\HttpException;
 use api\components\Response;
-use common\base\ActiveRecord;
+use yii\db\ActiveRecord;
 use yii\base\Action;
 use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
@@ -41,24 +41,6 @@ class CreateAction extends Action
     }
 
     /**
-     * @since 2018-05-04 12:39:29
-     * @return bool
-     * @throws NotFoundHttpException
-     */
-    protected function beforeRun()
-    {
-        if ($this->canAccess instanceof \Closure) {
-            $this->canAccess = \call_user_func($this->canAccess);
-        }
-
-        if (!$this->canAccess) {
-            throw new NotFoundHttpException(null, $this->apiCodeFailed);
-        }
-
-        return true;
-    }
-
-    /**
      * @since 2018-02-28 13:11:32
      * @return Response
      * @throws HttpException
@@ -89,5 +71,23 @@ class CreateAction extends Action
 
         throw new HttpException(400, 'Creating failed.', $record->errors,
             $this->apiCodeFailed);
+    }
+
+    /**
+     * @since 2018-05-04 12:39:29
+     * @return bool
+     * @throws NotFoundHttpException
+     */
+    protected function beforeRun()
+    {
+        if ($this->canAccess instanceof \Closure) {
+            $this->canAccess = \call_user_func($this->canAccess);
+        }
+
+        if (!$this->canAccess) {
+            throw new NotFoundHttpException(null, $this->apiCodeFailed);
+        }
+
+        return true;
     }
 }

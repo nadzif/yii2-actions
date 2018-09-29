@@ -1,34 +1,32 @@
 <?php
 
-namespace backend\actions;
+namespace nadzif\actions;
 
-use common\base\GridModel;
 use yii\base\InvalidConfigException;
 
-class ListAction extends \yii\base\Action {
+class ListAction extends \yii\base\Action
+{
 
-    /**
-     * @var GridModel
-     */
     public $gridModel;
-    public $query = false;
+    public $query            = false;
     public $columns;
     public $title;
-    public $breadcrumbs = [];
+    public $breadcrumbs      = [];
     public $description;
-    public $showToggleData = false;
-    public $_list = '@backend/actions/layouts/_list';
-    public $pageSizeData = [
-        1 => 1,
-        10 => 10,
-        25 => 25,
-        50 => 50,
+    public $showToggleData   = false;
+    public $_list            = '@backend/actions/layouts/_list';
+    public $pageSizeData     = [
+        1   => 1,
+        10  => 10,
+        25  => 25,
+        50  => 50,
         100 => 100,
     ];
     public $showCreateButton = true;
-    public $createConfig = [];
+    public $createConfig     = [];
 
-    public function init() {
+    public function init()
+    {
         if ($this->showCreateButton) {
             if (!isset($this->createConfig['model']) && !isset($this->createConfig['button'])) {
                 throw new InvalidConfigException(\Yii::t('app', 'Set model'));
@@ -44,7 +42,8 @@ class ListAction extends \yii\base\Action {
         }
     }
 
-    public function run() {
+    public function run()
+    {
         if ($this->title) {
             $this->controller->getView()->title = $this->title;
         }
@@ -53,20 +52,20 @@ class ListAction extends \yii\base\Action {
             $this->controller->getView()->params['breadcrumbs'] = $this->breadcrumbs;
         }
         if ($this->description) {
-            $this->controller->getView()->params['description']  = $this->description;
+            $this->controller->getView()->params['description'] = $this->description;
         }
 
         $dataProvider = $this->gridModel->getDataProvider($this->query);
-        $columns = $this->columns ?: $this->gridModel->getColumns();
+        $columns      = $this->columns ?: $this->gridModel->getColumns();
 
         return $this->controller->render($this->_list, [
-                    'gridModel' => $this->gridModel,
-                    'dataProvider' => $dataProvider,
-                    'columns' => $columns,
-                    'pageSizeData' => $this->pageSizeData,
-                    'showCreateButton' => $this->showCreateButton,
-                    'createConfig' => $this->createConfig,
-                    'showToggleData' => $this->showToggleData,
+            'gridModel'        => $this->gridModel,
+            'dataProvider'     => $dataProvider,
+            'columns'          => $columns,
+            'pageSizeData'     => $this->pageSizeData,
+            'showCreateButton' => $this->showCreateButton,
+            'createConfig'     => $this->createConfig,
+            'showToggleData'   => $this->showToggleData,
         ]);
     }
 

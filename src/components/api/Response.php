@@ -1,11 +1,12 @@
 <?php
 
-namespace api\components;
+namespace nadzif\actions\components\api;
 
 use yii\base\BaseObject;
 
 /**
  * Class Response
+ *
  * @package api\components
  *
  * @author  Haqqi <me@haqqi.net>

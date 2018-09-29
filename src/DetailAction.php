@@ -1,8 +1,8 @@
 <?php
 
-namespace backend\actions;
+namespace nadzif\actions;
 
-use backend\base\ActiveRecord;
+use yii\db\ActiveRecord;
 use yii\widgets\DetailView;
 
 class DetailAction extends \yii\base\Action
