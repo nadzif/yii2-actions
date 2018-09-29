@@ -12,7 +12,7 @@ class UpdateAction extends \yii\base\Action
     public $breadcrumbs;
     public $recordIdentifier = 'name';
 
-    public $view = '@backend/actions/layouts/_form';
+    public $view = '@nadzif/actions/layouts/_form';
 
     public $form;
     public $scenario = BaseForm::SCENARIO_UPDATE;

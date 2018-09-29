@@ -9,7 +9,7 @@
 namespace nadzif\actions\ajax;
 
 
-use nadzif\actions\BaseForm;
+use nadzif\actions\base\BaseForm;
 use yii\base\Action;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
@@ -18,26 +18,32 @@ use yii\helpers\Json;
 
 class UpdateAction extends Action
 {
-    public $formModel;
+    public $view         = '@nadzif/actions/layouts/_form';
+
+    public $form;
     public $scenario     = BaseForm::SCENARIO_UPDATE;
     public $modalOptions = [];
+
     public $activeRecordClass;
+    public $key          = 'id';
+
     public $refreshGrid  = true;
     public $gridViewId;
-    public $key          = 'id';
-    public $form         = '@backend/actions/layouts/_form';
 
-    public $successAlert;
+    public $flashKeySuccess = 'success';
+    public $flashKeyError   = 'danger';
+
+    public $successMessage;
     public $errorMessage;
-    public $showError = true;
 
+    public $showError = true;
 
     public function init()
     {
 
-        if (!isset($this->successAlert)) {
-            $this->successAlert[] = [
-                'type'    => 'success',
+        if (!isset($this->successMessage)) {
+            $this->successMessage[] = [
+                'type'    => $this->flashKeySuccess,
                 'title'   => \Yii::t('app', 'Update Success'),
                 'message' => \Yii::t('app', 'Record has been updated.'),
             ];
@@ -56,7 +62,7 @@ class UpdateAction extends Action
         $requestParam = \Yii::$app->request->get($this->key);
 
         /** @var BaseForm $formModel */
-        $formModel           = $this->formModel;
+        $formModel           = $this->form;
         $formModel->scenario = $this->scenario;
 
         /** @var ActiveRecord $activeRecordClass */
@@ -71,7 +77,7 @@ class UpdateAction extends Action
             if ($formModel->load(\Yii::$app->request->post())) {
 
                 if ($formModel->save()) {
-                    return Json::encode(['data' => ['alert' => $this->successAlert]]);
+                    return Json::encode(['data' => ['alert' => $this->successMessage]]);
                 } else {
                     $errorAlerts = [
                         [
@@ -110,7 +116,7 @@ class UpdateAction extends Action
                     $pageOptions['gridViewId'] = $this->gridViewId;
                 }
 
-                return $this->controller->renderAjax($this->form, $pageOptions);
+                return $this->controller->renderAjax($this->view, $pageOptions);
             }
         }
     }
