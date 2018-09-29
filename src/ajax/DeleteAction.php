@@ -47,13 +47,15 @@ class DeleteAction extends Action
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function run($id)
+    public function run()
     {
+
+        $requestParam = \Yii::$app->request->get($this->key);
 
         /** @var ActiveRecord $activeRecord */
         $activeRecord = new $this->activeRecordClass;
 
-        $model = $activeRecord::find()->where([$this->key => $id]);
+        $model = $activeRecord::find()->where([$this->key => $requestParam]);
         if ($this->recordCondition) {
             $model->andWhere($this->recordCondition);
         }
