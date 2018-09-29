@@ -70,10 +70,12 @@ class UpdateAction extends \yii\base\Action
             }
         }
 
-        $view                          = $this->controller->getView();
-        $view->title                   = $this->title;
-        $view->params['breadcrumbs']   = $this->breadcrumbs;
-        $view->params['breadcrumbs'][] = $form->model->getAttribute($this->recordIdentifier);
+        $view                        = $this->controller->getView();
+        $view->title                 = $this->title;
+        $view->params['breadcrumbs'] = $this->breadcrumbs;
+        if ($form->model->hasAttribute($this->recordIdentifier)) {
+            $view->params['breadcrumbs'][] = $form->model->getAttribute($this->recordIdentifier);
+        }
 
         return $this->controller->render($this->view, ['model' => $form]);
     }
