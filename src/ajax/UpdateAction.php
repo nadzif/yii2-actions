@@ -28,7 +28,7 @@ class UpdateAction extends Action
     public $key          = 'id';
 
     public $refreshGrid  = true;
-    public $gridViewId;
+    public $gridId;
 
     public $flashKeySuccess = 'success';
     public $flashKeyError   = 'danger';
@@ -113,7 +113,7 @@ class UpdateAction extends Action
                 ];
 
                 if ($this->refreshGrid) {
-                    $pageOptions['gridViewId'] = $this->gridViewId;
+                    $pageOptions['gridId'] = $this->gridId;
                 }
 
                 return $this->controller->renderAjax($this->view, $pageOptions);
