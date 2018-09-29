@@ -2,7 +2,7 @@
 
 
 use demogorgorn\ajax\AjaxSubmitButton;
-use nadzif\actions\BaseForm;
+use nadzif\actions\base\BaseForm;
 use nadzif\actions\widgets\Modal;
 use rmrevin\yii\fontawesome\FAS;
 use rmrevin\yii\fontawesome\FontAwesome;
@@ -36,7 +36,7 @@ if ($formAsModal) {
         'options' => [
             'class' => $scenario . '-form-action',
             'data'  => [
-                'model' => (new \ReflectionClass($model))->getShortName()
+                'model' => (new ReflectionClass($model))->getShortName()
             ]
         ]
 
@@ -182,6 +182,6 @@ ActiveForm::end();
 if ($formAsModal) {
     Modal::end();
     if ($scenario === $model::SCENARIO_UPDATE) {
-        $this->registerJs(new JsExpression('$("#'.$modalId.'").prev("button").hide()'));
+        $this->registerJs(new JsExpression('$("#' . $modalId . '").prev("button").hide()'));
     }
 }
