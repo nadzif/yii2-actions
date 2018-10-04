@@ -56,7 +56,7 @@ foreach ($formRules as $attributeName => $attributeOptions) {
         continue;
     }
 
-    $inputType    = ArrayHelper::getValue($attributeOptions, 'inputType', 'text');
+    $inputType    = ArrayHelper::getValue($attributeOptions, 'inputType', BaseForm::INPUT_TYPE_TEXT);
     $inputOptions = ArrayHelper::getValue($attributeOptions, 'inputOptions', []);
 
     $inputId   = $model->scenario . '-' . Html::getInputId($model, $attributeName);
@@ -64,11 +64,11 @@ foreach ($formRules as $attributeName => $attributeOptions) {
 
     switch ($attributeOptions['inputType']) {
         case BaseForm::INPUT_TYPE_TEXT:
-//            $inputOptions['id'] = $inputId;
+            $inputOptions['id'] = $inputId;
             $formField->textInput($inputOptions);
             break;
         case BaseForm::INPUT_TYPE_TEXTAREA:
-//            $inputOptions['id'] = $inputId;
+            $inputOptions['id'] = $inputId;
             $formField->textarea($inputOptions);
             break;
         case BaseForm::INPUT_TYPE_PASSWORD:
