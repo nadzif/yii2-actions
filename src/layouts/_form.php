@@ -172,7 +172,7 @@ JS;
         'options'           => ['class' => 'btn btn-info pull-right', 'type' => 'submit'],
     ]);
 } else {
-    echo Html::submitButton($submitLabel);
+    echo Html::submitButton($submitLabel, ['class' => 'btn btn-secondary']);
 }
 
 echo Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-secondary pull-right mr-2']);
